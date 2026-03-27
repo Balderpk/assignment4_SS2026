@@ -62,7 +62,6 @@ function init() {
 
  */
 
-//
 function fetchRandomMeal() {
   return fetch("https://www.themealdb.com/api/json/v1/1/random.php")
     .then((response) => {
@@ -85,9 +84,40 @@ Receives a meal object with fields like:
   strIngredientX, strMeasureX, etc.
 */
 function displayMealData(meal) {
+  const strMeal = meal.strMeal;
+  const hedding = document.getElementById("mealHead");
+  hedding.innerHTML = strMeal;
+
+  const strArea = meal.strArea;
+  const place = document.getElementById("mealArea");
+  place.innerHTML = strArea;
+
+  const strCategory = meal.strCategory;
+  const category = document.getElementById("mealCategory");
+  category.innerHTML = strCategory;
+
   const strMealThumb = meal.strMealThumb;
   const imageElement = document.getElementById("mealImg");
   imageElement.src = strMealThumb;
+
+  const ul = document.getElementById("mealIngredients");
+  for (let i = 1; i <= 20; i++) {
+    const measure = meal[`strMeasure${i}`];
+    const ingredient = meal[`strIngredient${i}`];
+    if (!ingredient) {
+      break;
+    }
+
+    const li = document.createElement("li");
+    const ingredientsAndMeasure = `${measure} ${ingredient}`;
+
+    li.innerHTML = ingredientsAndMeasure;
+    ul.appendChild(li);
+  }
+
+  const strInstructions = meal.strInstructions;
+  const instruction = document.getElementById("mealInstructions");
+  instruction.innerHTML = strInstructions;
 }
 
 /*
