@@ -47,9 +47,35 @@ function init() {
 /*
  Fetch a Random Meal from TheMealDB
  Returns a Promise that resolves with the meal object
+ 
+3. Implement fetching the Random Meal  
+- Inside your code (in the provided skeleton file structure), write a function that sends a request to:
+     https://www.themealdb.com/api/json/v1/1/random.php
+- Explore the structure of JSON using console.log()
+- Parse the JSON response and retrieve relevant data about the meal (e.g., `strMeal`, `strMealThumb`, `strInstructions`, `strCategory`, `strIngredients`, `strMeasure` values).
+- Display this information on the webpage:
+ - Image (e.g., `strMealThumb`)  
+ - Name of the meal
+ - Category  
+ - A table or list of ingredients with their measures  
+ - Instructions for cooking  
+
  */
+
+//
 function fetchRandomMeal() {
-    // Fill in
+  return fetch("https://www.themealdb.com/api/json/v1/1/random.php")
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Could not fetch resource");
+      }
+      return response.json();
+    })
+
+    .then((data) => {
+      return data.meals[0];
+    })
+    .catch((error) => console.error(error));
 }
 
 /*
@@ -59,7 +85,9 @@ Receives a meal object with fields like:
   strIngredientX, strMeasureX, etc.
 */
 function displayMealData(meal) {
-    // Fill in
+  const strMealThumb = meal.strMealThumb;
+  const imageElement = document.getElementById("mealImg");
+  imageElement.src = strMealThumb;
 }
 
 /*
@@ -79,7 +107,7 @@ Don't forget encodeURIComponent()
 If no cocktails found, fetch random
 */
 function fetchCocktailByDrinkIngredient(drinkIngredient) {
-    // Fill in
+  // Fill in
 }
 
 /*
@@ -87,14 +115,14 @@ Fetch a Random Cocktail (backup in case nothing is found by the search)
 Returns a Promise that resolves to cocktail object
 */
 function fetchRandomCocktail() {
-    // Fill in
+  // Fill in
 }
 
 /*
 Display Cocktail Data in the DOM
 */
 function displayCocktailData(cocktail) {
-    // Fill in
+  // Fill in
 }
 
 /*
