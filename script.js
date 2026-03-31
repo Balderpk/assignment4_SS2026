@@ -117,7 +117,7 @@ function displayMealData(meal) {
 
   const strInstructions = meal.strInstructions;
   const instruction = document.getElementById("mealInstructions");
-  instruction.innerHTML = strInstructions;
+  instruction.innerHTML = strInstructions.replace(/\r?\n/g, "<br>");
 }
 
 /*
@@ -138,15 +138,17 @@ If no cocktails found, fetch random
 */
 
 function fetchCocktailByDrinkIngredient(drinkIngredient) {
-  return fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${encodeURIComponent(drinkIngredient)}`)
-  .then((response) => response.json())
-  .then((data) => {
-    if (data.drinks) {
-      return data.drinks[0];
-    } else {
-      return fetchRandomCocktail();
-    }
-  });
+  return fetch(
+    `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${encodeURIComponent(drinkIngredient)}`,
+  )
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.drinks) {
+        return data.drinks[0];
+      } else {
+        return fetchRandomCocktail();
+      }
+    });
 }
 
 /*
@@ -175,13 +177,28 @@ function displayCocktailData(cocktail) {
   /*image*/
   const image = document.createElement("img");
   image.src = cocktail.strDrinkThumb;
+  image.alt = cocktail.strDrink;
 
-  /*how to make the drink/instuction, dont know if we need that*/
+  /*instuctions*/
   const instructions = document.createElement("p");
   instructions.textContent = cocktail.strInstructions;
 
+  /*ingredient list*/
+  const drinkIngredients = document.createElement("ul");
+
+  for (let i = 1; i <= 20; i++) {
+    const ingredient = cocktail[`strIngredient${i}`];
+
+    if (!ingredient) break;
+
+    const li = document.createElement("li");
+    li.textContent = ingredient;
+    drinkIngredients.appendChild(li);
+  }
+
   container.appendChild(name);
   container.appendChild(image);
+  container.appendChild(drinkIngredients);
   container.appendChild(instructions);
 }
 

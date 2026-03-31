@@ -32,10 +32,10 @@ body {
   padding: 0 24px;
 }
 
-#mealInstructions {
-  padding: 0 24px;
-}
-
 label {
   padding-top: 24px;
+}
+
+p {
+  max-width: 500px;
 }
