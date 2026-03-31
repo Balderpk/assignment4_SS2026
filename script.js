@@ -165,8 +165,27 @@ function fetchRandomCocktail() {
 Display Cocktail Data in the DOM
 */
 function displayCocktailData(cocktail) {
-  // Fill in
+  const container = document.getElementById("cocktail-container");
+  container.innerHTML = "";
+
+  /*name*/
+  const name = document.createElement("h2");
+  name.textContent = cocktail.strDrink;
+
+  /*image*/
+  const image = document.createElement("img");
+  image.src = cocktail.strDrinkThumb;
+
+  /*how to make the drink/instuction, dont know if we need that*/
+  const instructions = document.createElement("p");
+  instructions.textContent = cocktail.strInstructions;
+
+  container.appendChild(name);
+  container.appendChild(image);
+  container.appendChild(instructions);
 }
+
+/*image, name, and a list of ingredients*/
 
 /*
 Call init() when the page loads
